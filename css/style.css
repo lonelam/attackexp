@@ -1,0 +1,14 @@
+.middlebox
+{
+  background-color: lightblue;
+  max-width: 270px;
+  margin: 0 auto;
+}
+form
+{
+  text-align: right;
+}
+form > .form-center
+{
+  text-align: center;
+}
