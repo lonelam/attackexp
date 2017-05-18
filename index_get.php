@@ -1,7 +1,17 @@
 <?php
 include("header.php") ?>
 <?php
-$conn = mysqli_connect("127.0.0.1", "root", "laizenan.123", "exp_use");
+$config_sql = parse_ini_file('config.ini');
+$conn = mysqli_connect("127.0.0.1", $config_sql['user'], $config_sql['psw'], "exp_use");
+if (!$conn)
+{
+  echo "<p style = 'color:red'> Your database is automatically created!</p>";
+  $conn = mysqli_connect("127.0.0.1", $config_sql['user'], $config_sql['psw']);
+  $conn -> query("create database exp_use");
+  $conn -> select_db("exp_use");
+  $conn -> query("CREATE TABLE users( user_id INT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(25) NOT NULL, email VARCHAR(35) NOT NULL, psw_md5 VARCHAR(32) NOT NULL, UNIQUE(email) )");
+}
+//$conn = mysqli_connect("127.0.0.1", $config_sql['user'], $config_sql['psw'], "exp_use");
 $psw_md5 = md5('Shanghai');
 foreach ($_COOKIE as $key => $value) {
   if (!isset($_REQUEST[$key]))
